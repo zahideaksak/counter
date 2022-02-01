@@ -7,13 +7,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.zahideaksak.sayacapp.databinding.ActivityMainBinding
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var  binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("MainActivity", "onCreate Çağırıldı")
+        Timber.i( "onCreate Çağırıldı")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -31,8 +32,38 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.i("MainActivity", "onStart Çağırıldı")
+        Timber.i("onStart Çağırıldı")
     }
+
+    override fun onRestart() {
+        super.onRestart()
+        Timber.i("onRestart Çağırıldı")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.i("onResume Çağırıldı")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Timber.i("onPause Çağırıldı")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.i("onStop Çağırıldı")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i("onDestroy Çağırıldı")
+    }
+    //bir kere cagirilmali olunca onCreate, tamamen kapatilirken onDestroy
+    //onCreate ve onDestroy lifecycle boyunca sadece bir kere calisiyor.
+    //onCreate - ilk activity olusturuldugunda, onDestroy - activity kapatildiginda
+    //onStart calistirildiginda activity gorunur oluyor, onStop calistirildiginda gorunurlugunu kaybediyor
+    //onResume calistiginda activity odak noktasında, onPause calistiktan sonra odak noktasından cikiyor fakat arka tarafta hala gorunur durumda.
 
     private fun onShare() {
         val share = Intent.createChooser(Intent().apply {
